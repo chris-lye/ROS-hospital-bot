@@ -1,2 +1,2 @@
-turtlebot3_simulations/turtlebot3_fake:turtlebot3_simulations/turtlebot3_gazebo:turtlebot3_simulations/turtlebot3_simulations
+auto_slam
 -DCATKIN_DEVEL_PREFIX=/home/chris/catkin_ws/devel -DCMAKE_INSTALL_PREFIX=/home/chris/catkin_ws/install -G Unix Makefiles
