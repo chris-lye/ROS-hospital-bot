@@ -10,6 +10,8 @@ import rospy # Python library for ROS
 from sensor_msgs.msg import Image # Image is the message type
 from cv_bridge import CvBridge # Package to convert between ROS and OpenCV Images
 import cv2 # OpenCV library
+from picamera.array import PiRGBArray
+from picamera import PiCamera
   
 def publish_message():
  
@@ -27,8 +29,16 @@ def publish_message():
      
   # Create a VideoCapture object
   # The argument '0' gets the default webcam.
-  cap = cv2.VideoCapture(0)
-     
+  # cap = cv2.VideoCapture(0)
+  
+  camera = PiCamera()
+  camera.resolution = (640, 480)
+  camera.framerate = 32
+  rawCapture = PiRGBArray(camera, size=(640, 480))
+  
+  # allow the camera to warmup
+  time.sleep(0.1)
+  
   # Used to convert between ROS and OpenCV images
   br = CvBridge()
  
@@ -38,19 +48,39 @@ def publish_message():
       # Capture frame-by-frame
       # This method returns True/False as well
       # as the video frame.
-      ret, frame = cap.read()
+      #ret, frame = cap.read()      
          
-      if ret == True:
+      #if ret == True:
         # Print debugging information to the terminal
         rospy.loginfo('publishing video frame')
              
         # Publish the image.
         # The 'cv2_to_imgmsg' method converts an OpenCV
         # image to a ROS image message
-        pub.publish(br.cv2_to_imgmsg(frame))
+       # pub.publish(br.cv2_to_imgmsg(frame))
              
       # Sleep just enough to maintain the desired rate
-      rate.sleep()
+      #rate.sleep()
+      
+      # capture frames from the camera
+      for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
+	# grab the raw NumPy array representing the image, then initialize the timestamp and occupied/unoccupied text
+	image = frame.array # capture frames from the camera
+	if image:
+	# Print debugging information to the terminal
+          rospy.loginfo('publishing video frame')
+             
+          # Publish the image.
+          # The 'cv2_to_imgmsg' method converts an OpenCV
+          # image to a ROS image message
+          pub.publish(br.cv2_to_imgmsg(image))
+             
+        # Sleep just enough to maintain the desired rate
+        rate.sleep()
+        
+	# clear the stream in preparation for the next frame
+	rawCapture.truncate(0)
+	
          
 if __name__ == '__main__':
   try:
