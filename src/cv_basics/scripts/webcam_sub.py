@@ -34,7 +34,8 @@ def callback(data):
   #if k % 256 == 32:
   filename = "opencv_frame_{}.png".format(str(datetime.now()))
   cv2.imwrite(filename, current_frame)
-  print("{} successfully saved!".formattt(filename))
+  print("{} successfully saved!".format(filename))
+  rospy.loginfo("{} successfully saved!".format(filename))
       
 def receive_message():
  
