@@ -12,7 +12,7 @@ from cv_bridge import CvBridge # Package to convert between ROS and OpenCV Image
 import cv2 # OpenCV library
 # from picamera.array import PiRGBArray
 # from picamera import PiCamera
-import datetime
+from datetime import datetime
   
 def publish_message():
  
