@@ -12,6 +12,7 @@ from cv_bridge import CvBridge # Package to convert between ROS and OpenCV Image
 import cv2 # OpenCV library
 # from picamera.array import PiRGBArray
 # from picamera import PiCamera
+import datetime
   
 def publish_message():
  
@@ -58,6 +59,12 @@ def publish_message():
         # The 'cv2_to_imgmsg' method converts an OpenCV
         # image to a ROS image message
         pub.publish(br.cv2_to_imgmsg(frame))
+        
+        cv2.waitKey(5000) # wait for 5 seconds
+        filename = "opencv_frame_{}.png".format(str(datetime.now()))
+        cv2.imwrite(filename, frame)
+        print("{} successfully saved!".format(filename))
+        rospy.loginfo("{} successfully saved!".format(filename))
              
       # Sleep just enough to maintain the desired rate
       rate.sleep()
