@@ -27,13 +27,14 @@ def callback(data):
   # Display image
   cv2.imshow("camera", current_frame)
    
-  k = cv2.waitKey(1)
+  #k = 
+  cv2.waitKey(5000) # wait for 5 seconds
   # click Space key to capture image (https://stackoverflow.com/questions/34588464/python-how-to-capture-image-from-webcam-on-click-using-opencv)
   # all other code is from: https://automaticaddison.com/working-with-ros-and-opencv-in-ros-noetic/
-  if k % 256 == 32:
-    filename = "opencv_frame_{}.png".format(str(datetime.now()))
-    cv2.imwrite(filename, current_frame)
-    print("{} successfully saved!".format(filename))
+  #if k % 256 == 32:
+  filename = "opencv_frame_{}.png".format(str(datetime.now()))
+  cv2.imwrite(filename, current_frame)
+  print("{} successfully saved!".formattt(filename))
       
 def receive_message():
  
