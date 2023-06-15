@@ -27,8 +27,12 @@ Install dependencies:
 sudo apt install ros-noetic-multirobot-map-merge ros-noetic-explore-lite
 ~~~~
 #### Running on turtlebot:
-On the remote launch the SLAM module:
-
+On the remote launch the navigation module:
+~~~~bash
+roslaunch turtlebot3 roscore
+# in another terminal, do
+roslaunch turtlebot3 turtlebot3_navigation navigation_nomap.launch
+~~~~
 SSH into the robot and run:
 ~~~~bash
 roslaunch turtlebot3_bringup turtlebot3_robot.launch
