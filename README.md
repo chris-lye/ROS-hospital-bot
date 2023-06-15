@@ -1,6 +1,6 @@
 # ROS-hospital-bot
 
-Turtlebot3 sim package is not included, but is a dependency.
+Turtlebot3 sim package is not included, but is a dependency required for simulations.
 ### Setup
 Clone the TurtleBot3 Simulation Package
 ~~~~bash
@@ -8,6 +8,11 @@ cd src
 git clone -b noetic-devel https://github.com/ROBOTIS-GIT/turtlebot3_simulations.git
 cd ..
 catkin_make
+~~~~
+Install the packages required.
+~~~~bash
+sudo apt install ros-noetic-explore-lite
+sudo apt-get install ros-noetic-navigation
 ~~~~
 Source the environment setup for ROS before running catkin_make. 
 ~~~~bash
@@ -22,7 +27,17 @@ Install dependencies:
 sudo apt install ros-noetic-multirobot-map-merge ros-noetic-explore-lite
 ~~~~
 #### Running on turtlebot:
-
+On the remote launch the navigation module:
+~~~~bash
+roslaunch turtlebot3 roscore
+# in another terminal, do
+roslaunch turtlebot3 turtlebot3_navigation navigation_nomap.launch
+~~~~
+SSH into the robot and run:
+~~~~bash
+roslaunch turtlebot3_bringup turtlebot3_robot.launch
+roslaunch auto_slam auto_slam.launch
+~~~~
 #### Running simulation:
 ~~~~bash
 roslaunch turtlebot3_gazebo turtlebot3_stage_4.launch
